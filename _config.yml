@@ -8,13 +8,14 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-site_theme               : "default"
+site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
 title                    : "Junteng Liu"
 title_separator          : "-"
 name                     : &name "Junteng Liu"
-description              : &description "Junteng Liu's academic portfolio"
-url                      : https://spanellisnikolaos56480.github.io
-baseurl                  : "/LJT-Homepage"
+description              : &description "Junteng Liu's academic portfolio"   # Update this with a general description of your site, this is the default if not overridden by a page
+url                      : https://spanellisnikolaos56480.github.io/LJT-Homepage # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
+                                                           # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
+baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "spanellisnikolaos56480/LJT-Homepage"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
@@ -26,7 +27,7 @@ author:
   name             : "Junteng Liu"
   pronouns         : # example: "she/her"  
   bio              : "First-year PhD candidate at HKUST NLP Group"
-  location         : # Blank
+  location         : # URL
   employer         : "Hong Kong University of Science and Technology (HKUST)"
   uri              : # URL
   email            : "jliugi@connect.ust.hk" 
@@ -52,7 +53,7 @@ author:
   dribbble         : # Username
   github           : "Vicent0205"
   kaggle           : # Username  
-  stackoverflow    : # User number or user number and name
+  stackoverflow    : # User number or user number and name (i.e., use "1" or "1/jeff-atwood")    
 
   # Social media
   artstation       : # Username
@@ -91,25 +92,25 @@ publication_category:
     title: 'Conference Papers'
 
 # Site Settings
-teaser                   :  
-breadcrumbs              : false 
+teaser                   :  # filename of teaser fallback teaser image placed in /images/ for social media previews
+breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
 future                   : true
-read_more                : "disabled" 
-talkmap_link             : false      
+read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
+talkmap_link             : false      #change to true to add link to talkmap on talks page
 comments:
-  provider               : 
+  provider               : # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
     shortname            :
   discourse:
-    server               : 
+    server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
     appid                :
-    num_posts            : 
-    colorscheme          : 
+    num_posts            : # 5 (default)
+    colorscheme          : # "light" (default), "dark"
 staticman:
   allowedFields          : ['name', 'email', 'url', 'message']
-  branch                 : "gh-pages" 
+  branch                 : "gh-pages" # "master", "gh-pages"
   commitMessage          : "New comment."
   filename               : comment-{@timestamp}
   format                 : "yml"
@@ -122,10 +123,10 @@ staticman:
     date:
       type               : "date"
       options:
-        format           : "iso8601" 
+        format           : "iso8601" # "iso8601" (default), "timestamp-seconds", "timestamp-milliseconds"
 atom_feed:
-  hide                   : false     
-  path                   : 
+  hide                   : false     # change to true to hide the RSS feed in the footer
+  path                   : # blank (default) uses feed.xml
 
 
 # SEO Related
@@ -142,20 +143,19 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : og-image.png   
-og_description           : 
+og_image                 : og-image.png   # Social media default site image (lives in /images/)
+og_description           :  # Social media default site image description
+# For specifying social profiles
+# - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : Person
-  name                   : Junteng Liu
-  links:
-    - https://github.com/Vicent0205
-    - https://scholar.google.com/citations?hl=en&user=tbK9jl4AAAAJ&view_op=list_works&sortby=pubdate
-    - https://twitter.com/junteng88716710
+  type                   : # Person or Organization (defaults to Person)
+  name                   : # If the user or organization name differs from the site's name
+  links: # An array of links to social media profiles
 
 
 # Analytics
 analytics:
-  provider               :  "false" 
+  provider               :  "false" # false (default), "google", "google-universal", "google-analytics-4", "custom"
   google:
     tracking_id          :
 
@@ -221,13 +221,33 @@ kramdown:
 
 # These settings control the types of collections used by the template
 collections:
+  teaching:
+    output: true
+    permalink: /:collection/:path/
   publications:
+    output: true
+    permalink: /:collection/:path/
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+  talks:
     output: true
     permalink: /:collection/:path/
 
 
 # These settings control how pages and collections are included in the site
 defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
   # _pages
   - scope:
       path: ""
@@ -235,6 +255,15 @@ defaults:
     values:
       layout: single
       author_profile: true
+  # _teaching
+  - scope:
+      path: ""
+      type: teaching
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comments: true
   # _publications
   - scope:
       path: ""
@@ -244,17 +273,36 @@ defaults:
       author_profile: true
       share: true
       comments: true
+  # _portfolio
+  - scope:
+      path: ""
+      type: portfolio
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comment: true
+  # _talks
+  - scope:
+      path: ""
+      type: talks
+    values:
+      layout: talk
+      author_profile: true
+      share: true
 
 
 # Sass/SCSS
 sass:
   sass_dir: _sass
-  style: compressed 
+  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
 
 # Outputting
 permalink: /:categories/:title/
-timezone: Etc/UTC 
+# paginate: 5 # amount of posts to show
+# paginate_path: /page:num/
+timezone: Etc/UTC # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins
@@ -277,6 +325,9 @@ whitelist:
 
 
 # Archives
+#  Type
+#  - GitHub Pages compatible archive pages built with Liquid ~>
+#  - Jekyll Archives plugin archive pages ~>
 category_archive:
   type: liquid
   path: /categories/
